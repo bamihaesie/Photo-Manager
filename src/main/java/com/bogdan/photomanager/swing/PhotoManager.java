@@ -1,29 +1,12 @@
-package com.bogdan.photomanager;
+package com.bogdan.photomanager.swing;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Insets;
-import java.awt.Toolkit;
+import com.bogdan.photomanager.model.RenameCommand;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 
 /**
  * 
@@ -53,7 +36,7 @@ public class PhotoManager extends JPanel implements ActionListener {
 	static JProgressBar progressBar;
 	static ProgressListener progressListener;
 	
-	ImageRenamerTask imageRenamer;
+	ImageProcessingTask imageProcessingTask;
 
 	/**
 	 * Constructor
@@ -195,12 +178,12 @@ public class PhotoManager extends JPanel implements ActionListener {
 				log.append("Operation started!" + newline);
 				
 				// Create worker thread
-				imageRenamer = new ImageRenamerTask(command, log);
+				imageProcessingTask = new ImageProcessingTask(command, log);
 				progressBar.setValue(0);
-				imageRenamer.addPropertyChangeListener(progressListener);
+				imageProcessingTask.addPropertyChangeListener(progressListener);
 				
 				// Start worker thread
-				imageRenamer.execute();
+				imageProcessingTask.execute();
 				
 			} else {
 				log.append("Error: " + command.getMessage() + newline);
@@ -210,7 +193,7 @@ public class PhotoManager extends JPanel implements ActionListener {
 		} else if (e.getSource() == cancelButton) {
 			
 			log.append("Cancelling ..." + newline);
-			imageRenamer.cancel(false);
+			imageProcessingTask.cancel(false);
 			enableInteraction();
 			
 		}

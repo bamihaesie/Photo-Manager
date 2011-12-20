@@ -19,7 +19,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>com.bogdan.photomanager.PhotoManager</mainClass>
+							<mainClass>com.bogdan.photomanager.swing.PhotoManager</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

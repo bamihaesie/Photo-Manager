@@ -1,5 +1,6 @@
-package com.bogdan.photomanager;
+package com.bogdan.photomanager.model;
 
+import com.bogdan.photomanager.model.RenameCommand;
 import org.junit.Before;
 import org.junit.Test;
 

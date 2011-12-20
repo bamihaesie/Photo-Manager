@@ -1,4 +1,4 @@
-package com.bogdan.photomanager;
+package com.bogdan.photomanager.swing;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

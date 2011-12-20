@@ -1,4 +1,6 @@
-package com.bogdan.photomanager;
+package com.bogdan.photomanager.swing;
+
+import com.bogdan.photomanager.model.RenameCommand;
 
 import java.io.File;
 import java.util.Arrays;
@@ -7,14 +9,14 @@ import java.util.List;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 
-public class ImageRenamerTask extends SwingWorker<Void, String> {
+public class ImageProcessingTask extends SwingWorker<Void, String> {
 	
 	private RenameCommand command;
 	private JTextArea log;
 	
-	private ImageRenamerTask() {}
+	private ImageProcessingTask() {}
 	
-	public ImageRenamerTask(RenameCommand command, JTextArea log) {
+	public ImageProcessingTask(RenameCommand command, JTextArea log) {
 		this.command = command;
 		this.log = log;
 	}
@@ -69,6 +71,28 @@ public class ImageRenamerTask extends SwingWorker<Void, String> {
 		
 		return null;
 	}
+
+    @Override
+    protected void process(List<String> chunks) {
+        for (String chunk : chunks) {
+            log.append(chunk + "\n");
+        }
+        log.setCaretPosition(log.getDocument().getLength());
+    }
+
+    @Override
+    protected void done() {
+        if (isCancelled()) {
+            setProgress(0);
+            log.append("Cancelled!\n");
+            log.setCaretPosition(log.getDocument().getLength());
+        } else {
+            setProgress(100);
+            log.append("Done!\n");
+            PhotoManager.enableInteraction();
+            log.setCaretPosition(log.getDocument().getLength());
+        }
+    }
 	
 	private String getFilename (int index, int numFiles, String originalFilename) {
 		int numberOfDigits = Integer.toString(numFiles).length();
@@ -80,27 +104,6 @@ public class ImageRenamerTask extends SwingWorker<Void, String> {
 	private String getExtension (String filename) {
 		String[] tokens = filename.split("\\.");
 		return tokens[1];
-	}
-	
-	protected void process(List<String> chunks) {
-		for (String chunk : chunks) {
-			log.append(chunk + "\n");
-		}
-		log.setCaretPosition(log.getDocument().getLength());
-	}
-	
-	@Override
-	protected void done() {
-		if (isCancelled()) {
-			setProgress(0);
-			log.append("Cancelled!\n");
-			log.setCaretPosition(log.getDocument().getLength());
-		} else {
-			setProgress(100);
-			log.append("Done!\n");
-			PhotoManager.enableInteraction();
-			log.setCaretPosition(log.getDocument().getLength());
-		}
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.bogdan.photomanager;
+package com.bogdan.photomanager.model;
 
 public class RenameCommand {
 	
@@ -55,7 +55,7 @@ public class RenameCommand {
 		this.message = message;
 	}
 	
-	boolean isValid() {
+	public boolean isValid() {
 		
 		// directory must be specified
 		if (directory == null || directory.isEmpty()) {
