@@ -26,7 +26,7 @@ public class ImageProcessingTask extends SwingWorker<Void, String> {
 
 		setProgress(0);
 		
-		File dir = new File(command.directory);
+		File dir = new File(command.getDirectory());
 		String[] children = dir.list();
 		Arrays.sort(children);
 		int numFiles = children.length;
@@ -41,15 +41,15 @@ public class ImageProcessingTask extends SwingWorker<Void, String> {
 					if (file.isDirectory()) {
 						continue;
 					}
-					if (command.resetNames) {
+					if (command.isResetNames()) {
 						filename = getFilename(i, numFiles, filename);
 					}
-					if (command.applyPrefix) {
-						filename = command.prefixValue + filename;
+					if (command.isApplyPrefix()) {
+						filename = command.getPrefixValue() + filename;
 					}
-					if (command.applySuffix) {
+					if (command.isApplySuffix()) {
 						String[] filenameTokens = filename.split("\\.");
-						filename = filenameTokens[0] + command.suffixValue + "." + filenameTokens[1];
+						filename = filenameTokens[0] + command.getSuffixValue() + "." + filenameTokens[1];
 					}
 					
 					File newFile = new File(dir, filename);
