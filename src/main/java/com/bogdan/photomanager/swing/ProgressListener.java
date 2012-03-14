@@ -6,8 +6,9 @@ import java.beans.PropertyChangeListener;
 import javax.swing.JProgressBar;
 
 public class ProgressListener implements PropertyChangeListener {
-	
-	// prevent creation without providing a progress bar
+
+    private JProgressBar progressBar;
+
     private ProgressListener() {}
     
     ProgressListener(JProgressBar progressBar) {
@@ -23,7 +24,5 @@ public class ProgressListener implements PropertyChangeListener {
             progressBar.setValue(progress);
         }
     }
-    
-    private JProgressBar progressBar;
 
 }
