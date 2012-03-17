@@ -26,15 +26,15 @@ public class PhotoManager extends JPanel implements ActionListener {
 	/**
 	 * components
 	 */
-	static JLabel label;
-	static JTextField textField;
-	static JButton openButton, startButton, cancelButton;
-	static JFileChooser fc;
-	static JCheckBox prefixBox, suffixBox, resetNamesBox;
-	static JTextField prefixText, suffixText;
-	static JTextArea log;
-	static JProgressBar progressBar;
-	static ProgressListener progressListener;
+	JLabel label;
+	JTextField textField;
+	JButton openButton, startButton, cancelButton;
+	JFileChooser fc;
+	JCheckBox prefixBox, suffixBox, resetNamesBox;
+	JTextField prefixText, suffixText;
+	JTextArea log;
+	JProgressBar progressBar;
+	ProgressListener progressListener;
 	
 	ImageProcessingTask imageProcessingTask;
 
@@ -178,7 +178,7 @@ public class PhotoManager extends JPanel implements ActionListener {
 				log.append("Operation started!" + newline);
 				
 				// Create worker thread
-				imageProcessingTask = new ImageProcessingTask(command, log);
+				imageProcessingTask = new ImageProcessingTask(command, log, this);
 				progressBar.setValue(0);
 				imageProcessingTask.addPropertyChangeListener(progressListener);
 				
@@ -202,7 +202,7 @@ public class PhotoManager extends JPanel implements ActionListener {
 
 	}
 	
-	public static void enableInteraction () {
+	public void enableInteraction () {
 		label.setEnabled(true);
 		textField.setEnabled(true);
 		openButton.setEnabled(true);
@@ -215,7 +215,7 @@ public class PhotoManager extends JPanel implements ActionListener {
 		cancelButton.setEnabled(false);
 	}
 	
-	public static void disableInteraction () {
+	public void disableInteraction () {
 		label.setEnabled(false);
 		textField.setEnabled(false);
 		openButton.setEnabled(false);

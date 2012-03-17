@@ -1,14 +1,13 @@
 package com.bogdan.photomanager.swing;
 
-import com.bogdan.photomanager.swing.ProgressListener;
 import org.junit.Before;
 import org.junit.Test;
+
 import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
