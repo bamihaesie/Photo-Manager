@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.List;
 
 /**
  * 
@@ -21,7 +22,9 @@ public class PhotoManager extends JPanel implements ActionListener {
 	 * constants
 	 */
 	private static final long serialVersionUID = 1L;
-	static private final String newline = "\n";
+	static private final String NEWLINE = "\n";
+    private static final int FRAME_WIDTH = 600;
+    private static final int FRAME_HEIGHT = 360;
 	
 	/**
 	 * components
@@ -35,6 +38,7 @@ public class PhotoManager extends JPanel implements ActionListener {
 	JTextArea log;
 	JProgressBar progressBar;
 	ProgressListener progressListener;
+    List<JComponent> components;
 	
 	ImageProcessingTask imageProcessingTask;
 
@@ -91,6 +95,17 @@ public class PhotoManager extends JPanel implements ActionListener {
 		panel3.add(progressBar);
 		panel3.add(new JSeparator(SwingConstants.HORIZONTAL));
 		panel3.add(logScrollPane);
+
+        components.add(label);
+        components.add(textField);
+        components.add(openButton);
+        components.add(prefixBox);
+        components.add(prefixText);
+        components.add(suffixBox);
+        components.add(suffixText);
+        components.add(resetNamesBox);
+        components.add(startButton);
+        components.add(cancelButton);
 
 		// Add the buttons and the log to this panel.
 		layout.setHorizontalGroup(layout
@@ -154,9 +169,9 @@ public class PhotoManager extends JPanel implements ActionListener {
 				File file = fc.getSelectedFile();
 				// This is where a real application would open the file.
 				textField.setText(file.getPath());
-				log.append("Opening: " + file.getPath() + "." + newline);
+				log.append("Opening: " + file.getPath() + "." + NEWLINE);
 			} else {
-				log.append("Open command cancelled by user." + newline);
+				log.append("Open command cancelled by user." + NEWLINE);
 			}
 
 			// Handle start button action
@@ -175,7 +190,7 @@ public class PhotoManager extends JPanel implements ActionListener {
 				
 				disableInteraction();
 
-				log.append("Operation started!" + newline);
+				log.append("Operation started!" + NEWLINE);
 				
 				// Create worker thread
 				imageProcessingTask = new ImageProcessingTask(command, log, this);
@@ -186,13 +201,13 @@ public class PhotoManager extends JPanel implements ActionListener {
 				imageProcessingTask.execute();
 				
 			} else {
-				log.append("Error: " + command.getMessage() + newline);
+				log.append("Error: " + command.getMessage() + NEWLINE);
 			}
 
 			// Handle start button action
 		} else if (e.getSource() == cancelButton) {
 			
-			log.append("Cancelling ..." + newline);
+			log.append("Cancelling ..." + NEWLINE);
 			imageProcessingTask.cancel(false);
 			enableInteraction();
 			
@@ -203,66 +218,20 @@ public class PhotoManager extends JPanel implements ActionListener {
 	}
 	
 	public void enableInteraction () {
-		label.setEnabled(true);
-		textField.setEnabled(true);
-		openButton.setEnabled(true);
-		prefixBox.setEnabled(true);
-		prefixText.setEnabled(true);
-		suffixBox.setEnabled(true);
-		suffixText.setEnabled(true);
-		resetNamesBox.setEnabled(true);
-		startButton.setEnabled(true);
-		cancelButton.setEnabled(false);
+        for (JComponent component : components) {
+            component.setEnabled(true);
+        }
+        cancelButton.setEnabled(false);
 	}
 	
 	public void disableInteraction () {
-		label.setEnabled(false);
-		textField.setEnabled(false);
-		openButton.setEnabled(false);
-		prefixBox.setEnabled(false);
-		prefixText.setEnabled(false);
-		suffixBox.setEnabled(false);
-		suffixText.setEnabled(false);
-		resetNamesBox.setEnabled(false);
-		startButton.setEnabled(false);
-		cancelButton.setEnabled(true);
+        for (JComponent component : components) {
+            component.setEnabled(false);
+        }
+        cancelButton.setEnabled(true);
 	}
 
-	/**
-	 * 
-	 * Create and show frame
-	 * 
-	 */
-	private static void createAndShowGUI() {
-		
-		int frameWidth = 600;
-		int frameHeight = 360;
-		
-		// Create and set up the window.
-		JFrame frame = new JFrame("Photo Manager");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		// Add content to the window.
-		frame.add(new PhotoManager());
-		
-		// Display the window in the center of the screen
-		Toolkit tk = Toolkit.getDefaultToolkit();
-	    Dimension screenSize = tk.getScreenSize();
-	    int screenHeight = screenSize.height;
-	    int screenWidth = screenSize.width;
-	    frame.setLocation((screenWidth / 2) - (frameWidth / 2), (screenHeight / 2) - (frameHeight / 2));
-		
-		frame.setSize(frameWidth, frameHeight);
-		frame.setResizable(false);
-		frame.setVisible(true);
-	}
-
-	/**
-	 * Main
-	 * @param args
-	 */
 	public static void main(String[] args) {
-
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				createAndShowGUI();
@@ -270,4 +239,29 @@ public class PhotoManager extends JPanel implements ActionListener {
 		});
 	}
 
+    private static void createAndShowGUI() {
+        JFrame frame = createFrame();
+        centerFrameToScreen(frame);
+        setFrameProperties(frame);
+    }
+
+    private static JFrame createFrame() {
+        JFrame frame = new JFrame("Photo Manager");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(new PhotoManager());
+        return frame;
+    }
+
+    private static void centerFrameToScreen(JFrame frame) {
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        Dimension screenSize = tk.getScreenSize();
+        frame.setLocation(  (screenSize.width / 2) - (FRAME_WIDTH / 2),
+                            (screenSize.height / 2) - (FRAME_HEIGHT / 2));
+        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+    }
+
+    private static void setFrameProperties(JFrame frame) {
+        frame.setResizable(false);
+        frame.setVisible(true);
+    }
 }
