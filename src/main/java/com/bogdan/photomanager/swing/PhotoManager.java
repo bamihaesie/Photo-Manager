@@ -107,43 +107,29 @@ public class PhotoManager extends JPanel implements ActionListener {
     }
 
     private void handleLayout(GroupLayout layout) {
-        layout.setHorizontalGroup(layout
-                .createSequentialGroup()
-                .addGroup(
-                        layout.createParallelGroup(
-                                GroupLayout.Alignment.LEADING)
-                                .addComponent(prefixBox)
-                                .addComponent(suffixBox)
-                                .addComponent(resetNamesBox))
-                .addGroup(
-                        layout.createParallelGroup(
-                                GroupLayout.Alignment.LEADING)
-                                .addComponent(prefixText)
-                                .addComponent(suffixText))
-                .addGroup(
-                        layout.createParallelGroup(
-                                GroupLayout.Alignment.LEADING)
-                                .addComponent(startButton)
-                                .addComponent(cancelButton)));
+        layout.setHorizontalGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addComponent(prefixBox)
+                .addComponent(suffixBox)
+                .addComponent(resetNamesBox))
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addComponent(prefixText)
+                .addComponent(suffixText))
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addComponent(startButton)
+                .addComponent(cancelButton)));
 
-        layout.setVerticalGroup(layout
-                .createSequentialGroup()
-                .addGroup(
-                        layout.createParallelGroup(
-                                GroupLayout.Alignment.BASELINE)
-                                .addComponent(prefixBox)
-                                .addComponent(prefixText))
-                .addGroup(
-                        layout.createParallelGroup(
-                                GroupLayout.Alignment.BASELINE)
-                                .addComponent(suffixBox)
-                                .addComponent(suffixText)
-                                .addComponent(startButton))
-                .addGroup(
-                        layout.createParallelGroup(
-                                GroupLayout.Alignment.TRAILING)
-                                .addComponent(resetNamesBox)
-                                .addComponent(cancelButton)));
+        layout.setVerticalGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                .addComponent(prefixBox)
+                .addComponent(prefixText))
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                .addComponent(suffixBox)
+                .addComponent(suffixText)
+                .addComponent(startButton))
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                .addComponent(resetNamesBox)
+                .addComponent(cancelButton)));
     }
 
     private void addComponentsToArray() {
