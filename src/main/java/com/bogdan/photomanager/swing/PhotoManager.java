@@ -146,6 +146,10 @@ public class PhotoManager extends JPanel implements ActionListener {
         components.add(startButton);
         components.add(cancelButton);
     }
+    
+    protected List<JComponent> getComponentList() {
+        return components;
+    }
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == openButton) {
