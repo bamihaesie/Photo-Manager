@@ -19,12 +19,13 @@ public class PhotoManager extends JPanel implements ActionListener {
 	private static final String NEWLINE = "\n";
     private static final int FRAME_WIDTH = 600;
     private static final int FRAME_HEIGHT = 360;
+    protected static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     private JTextArea log;
     private JLabel label;
     private JFileChooser fc;
 	private JProgressBar progressBar;
-    private List<JComponent> components;
+    protected List<JComponent> components;
     private ProgressListener progressListener;
 	private ImageProcessingTask imageProcessingTask;
     private JTextField textField, prefixText, suffixText;
@@ -230,23 +231,22 @@ public class PhotoManager extends JPanel implements ActionListener {
         setFrameProperties(frame);
     }
 
-    private static JFrame createFrame() {
+    protected static JFrame createFrame() {
         JFrame frame = new JFrame("Photo Manager");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(new PhotoManager());
         return frame;
     }
 
-    private static void centerFrameToScreen(JFrame frame) {
-        Toolkit tk = Toolkit.getDefaultToolkit();
-        Dimension screenSize = tk.getScreenSize();
+    protected static void centerFrameToScreen(JFrame frame) {
         frame.setLocation(  (screenSize.width / 2) - (FRAME_WIDTH / 2),
                             (screenSize.height / 2) - (FRAME_HEIGHT / 2));
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
     }
 
-    private static void setFrameProperties(JFrame frame) {
+    protected static void setFrameProperties(JFrame frame) {
         frame.setResizable(false);
         frame.setVisible(true);
     }
+
 }
