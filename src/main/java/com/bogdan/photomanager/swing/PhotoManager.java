@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.List;
 /**
  * @author bogdan
  */
-public class PhotoManager extends JPanel implements ActionListener {
+public class PhotoManager extends JPanel implements ActionListener, FocusListener {
 
 	private static final long serialVersionUID = 1L;
 	private static final String NEWLINE = "\n";
@@ -54,7 +56,9 @@ public class PhotoManager extends JPanel implements ActionListener {
 
         textField = new JTextField(30);
         prefixText = new JTextField(10);
+        prefixText.addFocusListener(this);
 		suffixText = new JTextField(10);
+        suffixText.addFocusListener(this);
 
         groupComponentsIntoPanels();
 		enableInteraction();
@@ -160,6 +164,28 @@ public class PhotoManager extends JPanel implements ActionListener {
 			handleCancelButton();
 		}
 	}
+
+    @Override
+    public void focusGained(FocusEvent e) {
+        if (e.getSource() == prefixText) {
+            prefixBox.setSelected(true);
+        } else if (e.getSource() == suffixText) {
+            suffixBox.setSelected(true);
+        }
+    }
+
+    @Override
+    public void focusLost(FocusEvent e) {
+        if (e.getSource() == prefixText) {
+            if (prefixText.getText() == null || "".equals(prefixText.getText())) {
+                prefixBox.setSelected(false);
+            }
+        } else if (e.getSource() == suffixText) {
+            if (suffixText.getText() == null || "".equals(suffixText.getText())) {
+                suffixBox.setSelected(false);
+            }
+        }
+    }
 
     private void handleOpenButton() {
         if (fc.showOpenDialog(PhotoManager.this) == JFileChooser.APPROVE_OPTION) {
